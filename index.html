@@ -320,8 +320,8 @@
         const sortedYears = Array.from(dbYears).sort((a, b) => b.localeCompare(a));
         const curVal = currentFilter.year;
         
-        yearSelect.innerHTML = '<option value="ALL">全部年份</option>' + sortedYears.map(y => `
-          <option value="${y}" ${curVal === y ? 'selected' : ''}>${y === '2019' ? '2019年' : y === '2017' ? '2017' : y + '2017年'}</option>
+        yearSelect.innerHTML = '<option value="ALL" ' + (curVal === 'ALL' ? 'selected' : '') + '>全部年份</option>' + sortedYears.map(y => `
+          <option value="${y}" ${curVal === y ? 'selected' : ''}>${y}年</option>
         `).join('');
 
       } catch (err) {
