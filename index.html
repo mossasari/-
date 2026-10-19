@@ -321,7 +321,7 @@
         const curVal = currentFilter.year;
         
         yearSelect.innerHTML = '<option value="ALL">全部年份</option>' + sortedYears.map(y => `
-          <option value="${y}" ${curVal === y ? 'selected' : ''}>${y === '2019' ? '2019 开市年' : y === '2017' ? '2017 早期物料' : y + ' 年'}</option>
+          <option value="${y}" ${curVal === y ? 'selected' : ''}>${y === '2019' ? '2019年' : y === '2017' ? '2017' : y + '2017年'}</option>
         `).join('');
 
       } catch (err) {
