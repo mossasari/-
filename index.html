@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <meta name="referrer" content="no-referrer">
   <title>朝陇山周边图鉴档案库</title>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -10,9 +10,8 @@
   <script src="https://unpkg.com/lucide@latest"></script>
 
   <style>
-    /* 🌟 明亮舒适纸质大字风格 */
     body {
-      background-color: #f3f4f6; /* 舒适浅灰底，彻底告别压抑黑 */
+      background-color: #f3f4f6;
       color: #1f2937;
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       -webkit-font-smoothing: antialiased;
@@ -23,19 +22,17 @@
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     .pill-btn { white-space: nowrap; flex-shrink: 0; }
 
-    /* 明亮图鉴卡片：纯白底板 + 悬浮柔和阴影 */
     .goods-card {
       background: #ffffff;
       border: 1px solid #e5e7eb;
       transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .goods-card:hover {
-      transform: translateY(-3px);
+      transform: translateY(-2px);
       border-color: #0284c7;
-      box-shadow: 0 12px 24px -8px rgba(2, 132, 199, 0.15);
+      box-shadow: 0 10px 20px -6px rgba(2, 132, 199, 0.12);
     }
 
-    /* 侧边栏按钮交互 */
     .sidebar-btn {
       transition: all 0.15s ease;
       border-left: 3px solid transparent;
@@ -63,35 +60,31 @@
 </head>
 <body class="min-h-screen flex flex-col antialiased selection:bg-cyan-500 selection:text-white pb-16">
 
-  <!-- 1. 顶部导航栏 (清爽明亮白底) -->
-  <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 px-4 sm:px-8 py-3.5 sticky top-0 z-40 shadow-xs">
+  <!-- 1. 顶部导航栏 (已彻底移除后台入口，纯粹典藏风) -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-gray-200 px-3 sm:px-8 py-2.5 sm:py-3.5 sticky top-0 z-40 shadow-xs">
     <div class="max-w-[1600px] mx-auto flex items-center justify-between">
       
-      <div class="flex items-center gap-3">
-        <button onclick="toggleMobileSidebar()" class="lg:hidden text-gray-500 hover:text-black p-1">
-          <i data-lucide="menu" class="w-6 h-6"></i>
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
+        <button onclick="toggleMobileSidebar()" class="lg:hidden text-gray-600 hover:text-black p-1 shrink-0">
+          <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
-        <div class="w-9 h-9 bg-sky-600 text-white font-black flex items-center justify-center rounded-lg text-base tracking-tighter shadow-md">
+        <div class="w-8 h-8 bg-sky-600 text-white font-black flex items-center justify-center rounded-lg text-sm tracking-tighter shrink-0 shadow-sm">
           CLS
         </div>
-        <div>
-          <h1 class="text-base sm:text-lg font-bold text-gray-900 tracking-wide flex items-center gap-2">
-            朝陇山周边图鉴档案库
-            <span class="text-[11px] bg-sky-50 text-sky-700 border border-sky-200 px-1.5 py-0.5 rounded font-mono font-semibold">2017-NOW</span>
+        <div class="min-w-0">
+          <h1 class="text-sm sm:text-base font-bold text-gray-900 tracking-tight truncate flex items-center gap-1.5">
+            朝陇山周边图鉴
+            <span class="hidden md:inline-block text-[11px] bg-sky-50 text-sky-700 border border-sky-200 px-1.5 py-0.2 rounded font-mono font-semibold">2017-NOW</span>
           </h1>
         </div>
       </div>
 
-      <div class="flex items-center gap-3">
-        <div class="hidden sm:flex items-center gap-2 text-xs font-mono text-gray-600 bg-gray-50 border border-gray-200 px-3 py-1.5 rounded-lg">
+      <!-- 右侧仅保留优雅的统计徽章 -->
+      <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center gap-1.5 text-xs font-mono text-gray-600 bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg">
           <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
-          <span>全库在档: <strong id="total-count" class="text-sky-700 font-bold text-sm">0</strong> 件</span>
+          <span>在档: <strong id="total-count" class="text-sky-700 font-bold">0</strong></span>
         </div>
-        
-        <a href="admin.html" class="text-xs bg-sky-600 hover:bg-sky-700 text-white px-3.5 py-2 rounded-lg flex items-center gap-1.5 transition-colors font-semibold shadow-xs">
-          <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          <span>录入/修改后台</span>
-        </a>
       </div>
 
     </div>
@@ -100,8 +93,8 @@
   <!-- 2. 主体双栏架构 -->
   <div class="max-w-[1600px] w-full mx-auto flex-1 flex items-start">
     
-    <!-- ================= 左侧分类抽屉 (白底清爽大字) ================= -->
-    <aside id="sidebar-drawer" class="fixed lg:sticky top-[61px] left-0 z-30 w-80 h-[calc(100vh-61px)] bg-white border-r border-gray-200 p-4 overflow-y-auto no-scrollbar flex flex-col gap-5 transition-transform duration-200 -translate-x-full lg:translate-x-0 shadow-sm lg:shadow-none">
+    <!-- 左侧分类抽屉 -->
+    <aside id="sidebar-drawer" class="fixed lg:sticky top-[53px] sm:top-[61px] left-0 z-30 w-72 sm:w-80 h-[calc(100vh-53px)] sm:h-[calc(100vh-61px)] bg-white border-r border-gray-200 p-4 overflow-y-auto no-scrollbar flex flex-col gap-5 transition-transform duration-200 -translate-x-full lg:translate-x-0 shadow-xl lg:shadow-none">
       
       <!-- 搜索框 -->
       <div class="relative">
@@ -109,7 +102,7 @@
         <input 
           id="search-input" 
           type="search" 
-          placeholder="搜索干员代号/周边名/材质/考据..." 
+          placeholder="搜索干员代号/周边名/考据..." 
           class="w-full bg-gray-50 border border-gray-200 focus:border-sky-500 rounded-xl pl-9 pr-8 py-2 text-xs text-gray-900 placeholder-gray-400 outline-none transition"
         >
         <button id="clear-search" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 p-0.5">
@@ -118,95 +111,71 @@
       </div>
 
       <!-- 分类目录 -->
-      <div class="space-y-5 text-xs">
+      <div class="space-y-4 text-xs">
         
         <!-- 全部总览按钮 -->
-        <button onclick="resetAllFilters()" id="filter-btn-all" class="sidebar-btn active w-full text-left px-3 py-2.5 rounded-lg flex justify-between items-center text-sm font-bold text-gray-800">
+        <button onclick="resetAllFilters()" id="filter-btn-all" class="sidebar-btn active w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-xs sm:text-sm font-bold text-gray-800">
           <span class="flex items-center gap-2">
             <i data-lucide="layout-grid" class="w-4 h-4 text-sky-600"></i> 全部在库周边
           </span>
           <span id="badge-all-count" class="text-xs text-gray-400 font-mono">0</span>
         </button>
 
-        <!-- 🌟 1. 上新档期 (你原本最需要的按上新谷期筛选！) -->
+        <!-- 1. 发售年份 -->
         <div>
-          <div class="px-2 pb-1.5 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
+          <div class="px-2 pb-1 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
             <span class="flex items-center gap-1.5 text-sky-700">
-              <i data-lucide="calendar-days" class="w-4 h-4"></i> 上新档期
+              <i data-lucide="clock" class="w-3.5 h-3.5"></i> 发售年份
             </span>
-            <span class="text-[10px] text-gray-400 font-normal">各大淘系/线下谷期</span>
+            <button onclick="setYearFilter('ALL')" class="text-[11px] text-gray-400 hover:text-sky-600 font-normal">重置年份</button>
           </div>
-          <!-- 动态提取的上新档期列表 -->
+          <div id="sidebar-year-list" class="flex flex-wrap gap-1 mt-1.5 px-1"></div>
+        </div>
+
+        <!-- 2. 上新档期 -->
+        <div>
+          <div class="px-2 pb-1 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
+            <span class="flex items-center gap-1.5 text-sky-700">
+              <i data-lucide="calendar-days" class="w-3.5 h-3.5"></i> 
+              <span id="batch-section-title">上新档期时间线</span>
+            </span>
+            <span id="batch-filter-subtip" class="text-[10px] text-gray-400 font-mono">早 → 晚</span>
+          </div>
           <div id="sidebar-batches-list" class="space-y-0.5 mt-1.5 max-h-56 overflow-y-auto pr-1">
-            <div class="py-4 text-center text-gray-400 text-xs">正在分析上新档期...</div>
+            <div class="py-4 text-center text-gray-400 text-xs">正在梳理时间线...</div>
           </div>
         </div>
 
-        <!-- 🌟 2. 系列周边 (经典跨年度持续产品线) -->
-        <div>
-          <div class="px-2 pb-1.5 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
+        <!-- 3. 系列周边 (彻底纯动态) -->
+        <div id="series-line-section">
+          <div class="px-2 pb-1 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
             <span class="flex items-center gap-1.5 text-sky-700">
-              <i data-lucide="layers" class="w-4 h-4"></i> 系列周边
+              <i data-lucide="layers" class="w-3.5 h-3.5"></i> 系列周边
             </span>
-            <span class="text-[10px] text-gray-400 font-normal">持续长线系列</span>
+            <button onclick="clearSeriesLineFilter()" id="btn-clear-series-line" class="hidden text-[11px] text-gray-400 hover:text-sky-600 font-normal">清除系列</button>
           </div>
-          <div class="space-y-0.5 mt-1.5 text-xs">
-            <button onclick="setSeriesLineFilter('通行认证')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>通行认证系列</span>
-              <span id="badge-txrz" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-            <button onclick="setSeriesLineFilter('人事部')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>人事部简历系列</span>
-              <span id="badge-rsb" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-            <button onclick="setSeriesLineFilter('风尚速递')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>风尚速递系列</span>
-              <span id="badge-fssd" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-            <button onclick="setSeriesLineFilter('角色徽章')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>角色徽章/吧唧系列</span>
-              <span id="badge-jshz" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-            <button onclick="setSeriesLineFilter('贴纸包')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>贴纸包系列</span>
-              <span id="badge-tzb" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-            <button onclick="setSeriesLineFilter('干员棋子')" class="sidebar-btn series-line-btn w-full text-left px-3 py-2 rounded-lg flex justify-between items-center text-gray-700">
-              <span>干员棋子系列</span>
-              <span id="badge-gyqz" class="text-[11px] text-gray-400 font-mono">0</span>
-            </button>
-          </div>
-        </div>
-
-        <!-- 3. 发售年份 -->
-        <div>
-          <div class="px-2 pb-1.5 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
-            <span class="flex items-center gap-1.5 text-sky-700">
-              <i data-lucide="clock" class="w-4 h-4"></i> 发售年份
-            </span>
-          </div>
-          <div id="sidebar-year-list" class="flex flex-wrap gap-1 mt-2 px-1"></div>
+          <div id="sidebar-series-lines-list" class="space-y-0.5 mt-1.5 max-h-48 overflow-y-auto pr-1 text-xs"></div>
         </div>
 
         <!-- 4. 制品形态 -->
         <div>
-          <div class="px-2 pb-1.5 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
+          <div class="px-2 pb-1 text-xs font-bold text-gray-900 uppercase tracking-wide flex items-center justify-between border-b border-gray-100">
             <span class="flex items-center gap-1.5 text-sky-700">
-              <i data-lucide="tag" class="w-4 h-4"></i> 制品品类
+              <i data-lucide="tag" class="w-3.5 h-3.5"></i> 制品品类
             </span>
           </div>
-          <div id="sidebar-category-list" class="flex flex-wrap gap-1 mt-2 px-1">
+          <div id="sidebar-category-list" class="flex flex-wrap gap-1 mt-1.5 px-1">
             <button onclick="setCategoryFilter('ALL')" class="pill-btn cat-pill active px-2.5 py-1 rounded-md bg-sky-600 text-white font-bold text-xs">全部</button>
-            <button onclick="setCategoryFilter('立牌')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">立牌</button>
-            <button onclick="setCategoryFilter('徽章')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">徽章</button>
-            <button onclick="setCategoryFilter('挂件')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">挂件</button>
-            <button onclick="setCategoryFilter('手办')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">手办</button>
-            <button onclick="setCategoryFilter('贴纸')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">贴纸</button>
-            <button onclick="setCategoryFilter('色纸')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">色纸</button>
-            <button onclick="setCategoryFilter('明信片')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">明信片</button>
-            <button onclick="setCategoryFilter('毛绒')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">毛绒</button>
-            <button onclick="setCategoryFilter('生活周边')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">生活</button>
-            <button onclick="setCategoryFilter('虚拟兑换')" class="pill-btn cat-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs">虚拟兑换</button>
+            <button onclick="setCategoryFilter('立牌')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">立牌</button>
+            <button onclick="setCategoryFilter('徽章')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">徽章</button>
+            <button onclick="setCategoryFilter('挂件')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">挂件</button>
+            <button onclick="setCategoryFilter('手办')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">手办</button>
+            <button onclick="setCategoryFilter('贴纸')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">贴纸</button>
+            <button onclick="setCategoryFilter('色纸')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">色纸</button>
+            <button onclick="setCategoryFilter('明信片')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">明信片</button>
+            <button onclick="setCategoryFilter('毛绒')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">毛绒</button>
+            <button onclick="setCategoryFilter('生活周边')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">生活</button>
+            <button onclick="setCategoryFilter('虚拟兑换')" class="pill-btn cat-pill px-2 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs">虚拟兑换</button>
           </div>
         </div>
 
@@ -216,24 +185,24 @@
 
     <div id="sidebar-backdrop" onclick="toggleMobileSidebar()" class="hidden fixed inset-0 bg-black/40 z-20 lg:hidden"></div>
 
-    <!-- ================= 右侧展厅：明亮大字图鉴 ================= -->
-    <main class="flex-1 w-full min-w-0 p-4 sm:p-7 flex flex-col gap-5">
+    <!-- ================= 右侧展厅 ================= -->
+    <main class="flex-1 w-full min-w-0 p-2.5 sm:p-6 flex flex-col gap-3 sm:gap-4">
       
       <!-- 视图 A：主列表展厅 -->
-      <div id="catalog-view" class="fade-enter flex flex-col gap-4">
+      <div id="catalog-view" class="fade-enter flex flex-col gap-3">
         
         <!-- 顶栏状态与排序 -->
-        <div class="flex items-center justify-between pb-3 border-b border-gray-200 text-xs">
-          <div class="flex items-center gap-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-gray-200 text-xs">
+          <div class="flex items-center gap-1.5 flex-wrap">
             <span class="text-gray-400 font-medium">当前目录:</span>
-            <span id="current-filter-title" class="text-gray-900 font-bold text-sm sm:text-base">全部在库周边</span>
-            <span class="text-gray-300">/</span>
-            <span class="text-gray-500 font-mono">找到 <strong id="match-count" class="text-sky-700 text-sm">0</strong> 件</span>
+            <span id="current-filter-title" class="text-gray-900 font-bold text-xs sm:text-sm truncate max-w-[200px] sm:max-w-none">全部在库周边</span>
+            <span class="text-gray-300">·</span>
+            <span class="text-gray-500 font-mono">共 <strong id="match-count" class="text-sky-700">0</strong> 件</span>
           </div>
 
-          <div class="flex items-center gap-2">
-            <span class="text-gray-400">排序:</span>
-            <select id="sort-select" onchange="onSortChange(this.value)" class="bg-white border border-gray-200 rounded-lg px-2.5 py-1.5 text-gray-700 text-xs outline-none focus:border-sky-500 shadow-2xs">
+          <div class="flex items-center gap-1.5 self-end sm:self-auto shrink-0">
+            <span class="text-gray-400 text-[11px]">排序:</span>
+            <select id="sort-select" onchange="onSortChange(this.value)" class="bg-white border border-gray-200 rounded-md px-2 py-1 text-gray-700 text-xs outline-none focus:border-sky-500 shadow-2xs">
               <option value="time-asc">发售时间 (早 → 晚)</option>
               <option value="time-desc">发售时间 (晚 → 早)</option>
             </select>
@@ -249,71 +218,68 @@
           未检索到符合条件的周边记录。
         </div>
 
-        <!-- 🌟 大字舒适清爽卡片网格 -->
-        <div id="goods-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5"></div>
+        <!-- 卡片网格 -->
+        <div id="goods-grid" class="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-2.5 sm:gap-4"></div>
 
       </div>
 
-      <!-- 视图 B：原生大画幅单品展厅 (彻底去弹窗) -->
-      <div id="detail-view" class="hidden fade-enter flex-col gap-6 max-w-5xl w-full mx-auto pb-16">
+      <!-- 视图 B：原生大画幅单品展厅 -->
+      <div id="detail-view" class="hidden fade-enter flex-col gap-4 sm:gap-6 max-w-5xl w-full mx-auto pb-16">
         
-        <div class="flex items-center justify-between border-b border-gray-200 pb-3.5">
-          <button onclick="backToCatalog()" class="text-xs bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 px-3.5 py-2 rounded-lg flex items-center gap-1.5 font-semibold transition-all shadow-2xs">
+        <div class="flex items-center justify-between border-b border-gray-200 pb-3">
+          <button onclick="backToCatalog()" class="text-xs bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 px-3 py-1.5 rounded-lg flex items-center gap-1 font-semibold transition-all shadow-2xs">
             <i data-lucide="arrow-left" class="w-4 h-4 text-sky-600"></i>
-            <span>返回周边列表</span>
+            <span>返回列表</span>
           </button>
 
-          <div class="flex items-center gap-2 text-xs font-mono">
-            <span id="view-b-category" class="px-2.5 py-1 bg-sky-50 text-sky-700 border border-sky-200 rounded-md font-bold">分类</span>
-            <span id="view-b-date" class="px-2.5 py-1 bg-gray-100 text-gray-600 rounded-md">2019-05-25</span>
-            <span id="view-b-limited" class="hidden px-2.5 py-1 bg-rose-50 text-rose-600 border border-rose-200 rounded-md font-bold">限定特典</span>
+          <div class="flex items-center gap-1.5 text-xs font-mono">
+            <span id="view-b-category" class="px-2 py-0.5 bg-sky-50 text-sky-700 border border-sky-200 rounded font-bold">分类</span>
+            <span id="view-b-date" class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded">2019-05-25</span>
+            <span id="view-b-limited" class="hidden px-2 py-0.5 bg-rose-50 text-rose-600 border border-rose-200 rounded font-bold">限定特典</span>
           </div>
         </div>
 
-        <!-- 展厅主体 -->
-        <div class="flex flex-col lg:flex-row gap-8 items-start">
+        <div class="flex flex-col lg:flex-row gap-6 sm:gap-8 items-start">
           
-          <!-- 左侧：超大主图 + 翻页 + 缩略图轨道 -->
-          <div class="w-full lg:w-3/5 flex flex-col gap-4">
-            <div class="relative w-full min-h-[340px] max-h-[580px] bg-white rounded-2xl border border-gray-200 flex items-center justify-center overflow-hidden group select-none shadow-md">
-              <img id="view-b-main-img" src="" class="max-w-full max-h-[560px] w-auto h-auto object-contain Antigravity-zoom-in" onclick="window.open(this.src)" title="点击看原图">
+          <div class="w-full lg:w-3/5 flex flex-col gap-3">
+            <div class="relative w-full min-h-[260px] sm:min-h-[340px] max-h-[520px] bg-white rounded-xl sm:rounded-2xl border border-gray-200 flex items-center justify-center overflow-hidden group select-none shadow-sm">
+              <img id="view-b-main-img" src="" class="max-w-full max-h-[500px] w-auto h-auto object-contain cursor-zoom-in" onclick="window.open(this.src)" title="点击看原图">
               
-              <button id="view-b-prev-btn" onclick="prevModalImg(event)" class="absolute left-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-gray-800 flex items-center justify-center border border-gray-200 shadow-md transition-all opacity-80 hover:opacity-100">
-                <i data-lucide="chevron-left" class="w-6 h-6"></i>
+              <button id="view-b-prev-btn" onclick="prevModalImg(event)" class="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 text-gray-800 flex items-center justify-center border border-gray-200 shadow-md">
+                <i data-lucide="chevron-left" class="w-5 h-5 sm:w-6 sm:h-6"></i>
               </button>
 
-              <button id="view-b-next-btn" onclick="nextModalImg(event)" class="absolute right-3 top-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white/90 hover:bg-white text-gray-800 flex items-center justify-center border border-gray-200 shadow-md transition-all opacity-80 hover:opacity-100">
-                <i data-lucide="chevron-right" class="w-6 h-6"></i>
+              <button id="view-b-next-btn" onclick="nextModalImg(event)" class="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 text-gray-800 flex items-center justify-center border border-gray-200 shadow-md">
+                <i data-lucide="chevron-right" class="w-5 h-5 sm:w-6 sm:h-6"></i>
               </button>
 
-              <div id="view-b-page-badge" class="absolute bottom-3 right-3 bg-black/70 backdrop-blur text-white text-xs font-mono px-3 py-1 rounded-full font-bold">
+              <div id="view-b-page-badge" class="absolute bottom-2.5 right-2.5 bg-black/70 backdrop-blur text-white text-[11px] font-mono px-2 py-0.5 rounded-full font-bold">
                 1 / 1
               </div>
-              <div id="view-b-tag-badge" class="hidden absolute top-3 left-3 bg-sky-600 text-white text-xs px-3 py-1 rounded-lg font-bold shadow-md"></div>
+              <div id="view-b-tag-badge" class="hidden absolute top-2.5 left-2.5 bg-sky-600 text-white text-[11px] px-2.5 py-0.5 rounded-md font-bold shadow-md"></div>
             </div>
 
-            <div id="view-b-thumb-rail" class="flex gap-3 overflow-x-auto no-scrollbar py-1"></div>
+            <div id="view-b-thumb-rail" class="flex gap-2 overflow-x-auto no-scrollbar py-1"></div>
           </div>
 
-          <!-- 右侧：详尽档案 -->
-          <div class="w-full lg:w-2/5 flex flex-col gap-4">
+          <div class="w-full lg:w-2/5 flex flex-col gap-3.5">
             <div>
-              <h2 id="view-b-title" class="text-xl sm:text-2xl font-black text-gray-900 leading-snug tracking-tight mb-1">谷子全称</h2>
-              <p id="view-b-series" class="text-gray-500 text-xs sm:text-sm font-medium">首发所属企划：-</p>
+              <h2 id="view-b-title" class="text-lg sm:text-2xl font-black text-gray-900 leading-snug tracking-tight mb-1">谷子全称</h2>
+              <p id="view-b-series" class="text-gray-500 text-xs sm:text-sm font-medium">首发企划档期：-</p>
             </div>
 
-            <div class="space-y-3.5 bg-white p-5 rounded-2xl border border-gray-200 text-xs shadow-2xs">
-              <div class="flex justify-between items-center border-b border-gray-100 pb-3">
-                <span class="text-gray-500 font-medium text-xs">官方发售定价</span>
-                <span id="view-b-price" class="text-amber-600 font-bold text-lg sm:text-xl font-mono">¥ 0.00</span>
+            <div class="space-y-3 bg-white p-4 rounded-xl sm:rounded-2xl border border-gray-200 text-xs shadow-2xs">
+              <div class="flex justify-between items-center border-b border-gray-100 pb-2.5">
+                <span class="text-gray-500 font-medium">官方发售定价</span>
+                <span id="view-b-price" class="text-amber-600 font-bold text-base sm:text-xl font-mono">¥ 0.00</span>
               </div>
               
-              <div class="flex flex-col gap-2 border-b border-gray-100 pb-3">
-                <span class="text-gray-500 font-medium text-xs">登场干员</span>
-                <div id="view-b-ops-box" class="flex flex-wrap gap-1.5"></div>
+              <div class="flex flex-col gap-1.5 border-b border-gray-100 pb-2.5">
+                <span class="text-gray-500 font-medium">登场干员</span>
+                <div id="view-b-ops-box" class="flex flex-wrap gap-1"></div>
               </div>
 
-              <div class="flex justify-between items-start border-b border-gray-100 pb-3">
+              <div class="flex justify-between items-start border-b border-gray-100 pb-2.5">
                 <span class="text-gray-500 font-medium shrink-0">材质/规格</span>
                 <span id="view-b-spec" class="text-gray-800 text-right leading-relaxed">-</span>
               </div>
@@ -324,21 +290,19 @@
               </div>
             </div>
 
-            <!-- 复刻历史履历 -->
-            <div id="view-b-reprint-section" class="hidden bg-amber-50/60 p-4 rounded-2xl border border-amber-200 space-y-2.5">
+            <div id="view-b-reprint-section" class="hidden bg-amber-50/60 p-3.5 rounded-xl border border-amber-200 space-y-2">
               <div class="text-xs font-bold text-amber-800 flex items-center justify-between">
-                <span class="flex items-center gap-1.5">
-                  <i data-lucide="history" class="w-4 h-4 text-amber-600"></i> 发售与复刻历史履历
+                <span class="flex items-center gap-1">
+                  <i data-lucide="history" class="w-3.5 h-3.5 text-amber-600"></i> 发售与复刻历史履历
                 </span>
-                <span id="view-b-reprint-badge" class="text-[11px] text-amber-600 font-mono">共 0 次再版</span>
+                <span id="view-b-reprint-badge" class="text-[10px] text-amber-600 font-mono">共 0 次再版</span>
               </div>
-              <div id="view-b-reprint-timeline" class="space-y-2 pt-1 font-mono text-xs"></div>
+              <div id="view-b-reprint-timeline" class="space-y-1.5 pt-1 font-mono text-xs"></div>
             </div>
 
-            <!-- 考据笔记 -->
-            <div class="bg-white p-4 rounded-2xl border border-gray-200 shadow-2xs">
-              <div class="text-xs font-bold text-gray-700 mb-1.5 flex items-center gap-1.5">
-                <i data-lucide="book-open" class="w-4 h-4 text-sky-600"></i>
+            <div class="bg-white p-3.5 rounded-xl border border-gray-200 shadow-2xs">
+              <div class="text-xs font-bold text-gray-700 mb-1 flex items-center gap-1">
+                <i data-lucide="book-open" class="w-3.5 h-3.5 text-sky-600"></i>
                 <span>历史背景与考据笔记</span>
               </div>
               <p id="view-b-desc-box" class="text-gray-600 text-xs leading-relaxed"></p>
@@ -360,10 +324,10 @@
     let ALL_GOODS = [];
     let currentFilter = {
       keyword: '',
-      batch: 'ALL',       // 🌟 1. 上新档期筛选 (如: 朝陇山开市特惠, 恒远津梁)
-      seriesLine: 'ALL',  // 🌟 2. 系列周边长线 (如: 通行认证, 人事部)
-      year: 'ALL',        // 3. 年份
-      category: 'ALL',    // 4. 品类形态
+      batch: 'ALL',
+      seriesLine: 'ALL',
+      year: 'ALL',
+      category: 'ALL',
       sortBy: 'time-asc'
     };
 
@@ -395,8 +359,8 @@
       setupKeyboardNav();
       setupHistoryNav();
       await fetchAllGoods();
-      renderSidebarBatches();
       renderSidebarYears();
+      updateDynamicSidebars();
       render();
     });
 
@@ -412,48 +376,11 @@
         ALL_GOODS = data || [];
         document.getElementById('total-count').innerText = ALL_GOODS.length;
         document.getElementById('badge-all-count').innerText = ALL_GOODS.length;
-
-        // 计算系列周边数量
-        const getLineCount = (kw) => ALL_GOODS.filter(i => (i.title || '').includes(kw) || (i.series || '').includes(kw)).length;
-        document.getElementById('badge-txrz').innerText = getLineCount('通行认证');
-        document.getElementById('badge-rsb').innerText = getLineCount('人事部');
-        document.getElementById('badge-fssd').innerText = getLineCount('风尚速递');
-        document.getElementById('badge-jshz').innerText = getLineCount('角色徽章');
-        document.getElementById('badge-tzb').innerText = getLineCount('贴纸包');
-        document.getElementById('badge-gyqz').innerText = getLineCount('干员棋子');
-
       } catch (err) {
         document.getElementById('loading-state').innerHTML = `<span class="text-rose-500 text-xs">加载失败: ${err.message}</span>`;
       }
     }
 
-    // 🌟 1. 动态提炼渲染【上新档期】列表 (自动分析全部企划上新)
-    function renderSidebarBatches() {
-      const container = document.getElementById('sidebar-batches-list');
-      const batchMap = {};
-
-      ALL_GOODS.forEach(i => {
-        const rawSeries = i.series || '常规通贩';
-        // 拆分可能填写的多个复刻企划
-        rawSeries.split(/[,，]/).forEach(s => {
-          const name = s.trim();
-          if (name) {
-            if (!batchMap[name]) batchMap[name] = 0;
-            batchMap[name]++;
-          }
-        });
-      });
-
-      const batchList = Object.keys(batchMap).sort((a,b) => batchMap[b] - batchMap[a]);
-      container.innerHTML = batchList.map(name => `
-        <button onclick="setBatchFilter('${name}')" class="sidebar-btn batch-btn w-full text-left px-3 py-1.5 rounded-lg flex justify-between items-center text-gray-700">
-          <span class="truncate pr-1">${name}</span>
-          <span class="text-[11px] text-gray-400 font-mono shrink-0">${batchMap[name]}</span>
-        </button>
-      `).join('');
-    }
-
-    // 🌟 2. 渲染年份芯片
     function renderSidebarYears() {
       const yearContainer = document.getElementById('sidebar-year-list');
       const dbYears = new Set(ALL_GOODS.map(i => String(i.year)).filter(y => y && y !== 'undefined' && y !== 'null'));
@@ -461,87 +388,212 @@
       const sortedYears = Array.from(dbYears).sort((a, b) => b.localeCompare(a));
 
       yearContainer.innerHTML = sortedYears.map(y => `
-        <button onclick="setYearFilter('${y}')" class="pill-btn year-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs font-mono">
+        <button onclick="setYearFilter('${y}')" id="year-pill-${y}" class="pill-btn year-pill px-2.5 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs font-mono transition-all">
           ${y}年
         </button>
       `).join('');
     }
 
-    // 切换【上新档期】筛选
-    window.setBatchFilter = function(batchName) {
-      currentFilter.batch = batchName;
-      currentFilter.seriesLine = 'ALL';
-      currentFilter.year = 'ALL';
+    function updateDynamicSidebars() {
+      renderSidebarBatches();
+      renderSidebarSeriesLines();
+    }
 
-      clearAllSidebarActives();
-      document.querySelectorAll('.batch-btn').forEach(btn => {
-        if (btn.querySelector('span').innerText === batchName) btn.classList.add('active');
+    function renderSidebarBatches() {
+      const container = document.getElementById('sidebar-batches-list');
+      const subtip = document.getElementById('batch-filter-subtip');
+      const sectionTitle = document.getElementById('batch-section-title');
+
+      let targetGoods = ALL_GOODS;
+      if (currentFilter.year !== 'ALL') {
+        targetGoods = ALL_GOODS.filter(i => String(i.year) === String(currentFilter.year));
+        sectionTitle.innerText = `${currentFilter.year}年 档期时间线`;
+        subtip.innerText = `该年 ${targetGoods.length} 件`;
+      } else {
+        sectionTitle.innerText = `全历史 档期时间线`;
+        subtip.innerText = `早 → 晚`;
+      }
+
+      const batchDict = {};
+      targetGoods.forEach(item => {
+        const dateStr = item.release_date || '2099-12-31';
+        const rawSeries = item.series || '常规通贩';
+        
+        rawSeries.split(/[,，]/).forEach(s => {
+          const name = s.trim();
+          if (!name) return;
+          if (!batchDict[name]) {
+            batchDict[name] = { name: name, count: 0, earliestDate: dateStr };
+          }
+          batchDict[name].count++;
+          if (new Date(dateStr) < new Date(batchDict[name].earliestDate)) {
+            batchDict[name].earliestDate = dateStr;
+          }
+        });
       });
 
-      document.getElementById('current-filter-title').innerText = `上新档期 // ${batchName}`;
-      render();
-    };
-
-    // 切换【系列周边】长线筛选
-    window.setSeriesLineFilter = function(lineName) {
-      currentFilter.seriesLine = lineName;
-      currentFilter.batch = 'ALL';
-      currentFilter.year = 'ALL';
-
-      clearAllSidebarActives();
-      document.querySelectorAll('.series-line-btn').forEach(btn => {
-        if (btn.querySelector('span').innerText.includes(lineName)) btn.classList.add('active');
+      const sortedBatches = Object.values(batchDict).sort((a, b) => {
+        return new Date(a.earliestDate || '2099-01-01') - new Date(b.earliestDate || '2099-01-01');
       });
 
-      document.getElementById('current-filter-title').innerText = `系列周边 // ${lineName}系列`;
-      render();
-    };
+      if (sortedBatches.length === 0) {
+        container.innerHTML = '<div class="py-3 text-center text-gray-400 text-xs">无对应档期</div>';
+        return;
+      }
 
-    // 切换【发售年份】
+      container.innerHTML = sortedBatches.map(b => {
+        const displayDate = currentFilter.year !== 'ALL' 
+          ? (b.earliestDate.length >= 10 ? b.earliestDate.substring(5, 10) : b.earliestDate)
+          : (b.earliestDate.length >= 7 ? b.earliestDate.substring(0, 7) : b.earliestDate);
+
+        const isActive = currentFilter.batch === b.name;
+
+        return `
+          <button onclick="setBatchFilter('${b.name}')" class="sidebar-btn batch-btn w-full text-left px-2 py-1.5 rounded-lg flex items-center justify-between text-gray-700 ${isActive ? 'active' : ''}">
+            <div class="flex items-center gap-1.5 min-w-0 pr-1">
+              <span class="text-[10px] font-mono font-bold text-sky-600 shrink-0 bg-sky-50 px-1 py-0.2 rounded border border-sky-100">
+                ${displayDate}
+              </span>
+              <span class="truncate text-xs font-medium text-gray-800">${b.name}</span>
+            </div>
+            <span class="text-[11px] text-gray-400 font-mono shrink-0">${b.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function renderSidebarSeriesLines() {
+      const container = document.getElementById('sidebar-series-lines-list');
+      const clearBtn = document.getElementById('btn-clear-series-line');
+      
+      if (currentFilter.seriesLine !== 'ALL') {
+        clearBtn.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+      }
+
+      let targetGoods = ALL_GOODS;
+      if (currentFilter.year !== 'ALL') {
+        targetGoods = ALL_GOODS.filter(i => String(i.year) === String(currentFilter.year));
+      }
+
+      const seriesLineMap = {};
+
+      targetGoods.forEach(i => {
+        const line = (i.series_line || '').trim();
+        if (!line || line === '独立单品' || line === '独立单品/其他' || line.includes('无特定系列')) {
+          return;
+        }
+
+        if (!seriesLineMap[line]) seriesLineMap[line] = 0;
+        seriesLineMap[line]++;
+      });
+
+      const lineList = Object.keys(seriesLineMap).sort((a, b) => seriesLineMap[b] - seriesLineMap[a]);
+
+      if (lineList.length === 0) {
+        container.innerHTML = '<div class="py-2 text-center text-gray-400 text-[11px]">暂无系列周边归档</div>';
+        return;
+      }
+
+      container.innerHTML = lineList.map(name => {
+        const isActive = currentFilter.seriesLine === name;
+        return `
+          <button onclick="setSeriesLineFilter('${name}')" class="sidebar-btn series-line-btn w-full text-left px-2.5 py-1.5 rounded-lg flex justify-between items-center text-gray-700 ${isActive ? 'active' : ''}">
+            <span class="truncate pr-1">${name}</span>
+            <span class="text-[11px] text-gray-400 font-mono shrink-0">${seriesLineMap[name]}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
     window.setYearFilter = function(y) {
       currentFilter.year = y;
       currentFilter.batch = 'ALL';
       currentFilter.seriesLine = 'ALL';
 
-      clearAllSidebarActives();
       document.querySelectorAll('.year-pill').forEach(btn => {
-        const active = btn.innerText.includes(y);
-        btn.className = `pill-btn year-pill px-2.5 py-1 rounded-md text-xs font-mono transition-all ${
-          active ? 'bg-sky-600 text-white font-bold' : 'bg-gray-100 text-gray-700 border border-gray-200'
+        const active = (y !== 'ALL' && btn.innerText.includes(y));
+        btn.className = `pill-btn year-pill px-2.5 py-0.5 rounded text-xs font-mono transition-all ${
+          active ? 'bg-sky-600 text-white font-bold shadow-xs' : 'bg-gray-100 text-gray-700 border border-gray-200'
         }`;
       });
 
-      document.getElementById('current-filter-title').innerText = `${y} 年度在档周边`;
+      updateDynamicSidebars();
+
+      document.querySelectorAll('#sidebar-drawer .sidebar-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById('current-filter-title').innerText = y === 'ALL' ? '全部在库周边' : `${y}年在档周边`;
       render();
     };
 
-    // 切换【制品品类】
+    window.setBatchFilter = function(batchName) {
+      currentFilter.batch = batchName;
+      currentFilter.seriesLine = 'ALL';
+
+      document.querySelectorAll('.batch-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('#filter-btn-all, .series-line-btn').forEach(btn => btn.classList.remove('active'));
+      
+      const found = Array.from(document.querySelectorAll('.batch-btn')).find(b => b.innerText.includes(batchName));
+      if (found) found.classList.add('active');
+
+      document.getElementById('current-filter-title').innerText = `${batchName}`;
+      
+      if (window.innerWidth < 1024) toggleMobileSidebar();
+      render();
+    };
+
+    window.setSeriesLineFilter = function(lineName) {
+      currentFilter.seriesLine = lineName;
+      currentFilter.batch = 'ALL';
+
+      document.querySelectorAll('.series-line-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('#filter-btn-all, .batch-btn').forEach(btn => btn.classList.remove('active'));
+
+      const found = Array.from(document.querySelectorAll('.series-line-btn')).find(b => b.innerText.includes(lineName));
+      if (found) found.classList.add('active');
+
+      document.getElementById('btn-clear-series-line').classList.remove('hidden');
+      document.getElementById('current-filter-title').innerText = `系列 // ${lineName}`;
+      
+      if (window.innerWidth < 1024) toggleMobileSidebar();
+      render();
+    };
+
+    window.clearSeriesLineFilter = function() {
+      currentFilter.seriesLine = 'ALL';
+      document.querySelectorAll('.series-line-btn').forEach(btn => btn.classList.remove('active'));
+      document.getElementById('btn-clear-series-line').classList.add('hidden');
+      document.getElementById('current-filter-title').innerText = currentFilter.year === 'ALL' ? '全部在库周边' : `${currentFilter.year}年在档周边`;
+      render();
+    };
+
     window.setCategoryFilter = function(cat) {
       currentFilter.category = cat;
       document.querySelectorAll('.cat-pill').forEach(btn => {
         const active = btn.innerText.includes(cat) || (cat === 'ALL' && btn.innerText === '全部');
-        btn.className = `pill-btn cat-pill px-2.5 py-1 rounded-md text-xs transition-all ${
+        btn.className = `pill-btn cat-pill px-2 py-0.5 rounded text-xs transition-all ${
           active ? 'bg-sky-600 text-white font-bold' : 'bg-gray-100 text-gray-700 border border-gray-200'
         }`;
       });
       render();
     };
 
-    function clearAllSidebarActives() {
-      document.querySelectorAll('.sidebar-btn').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.year-pill').forEach(btn => {
-        btn.className = 'pill-btn year-pill px-2.5 py-1 rounded-md bg-gray-100 text-gray-700 border border-gray-200 text-xs font-mono';
-      });
-    }
-
     window.resetAllFilters = function() {
       currentFilter = { keyword: '', batch: 'ALL', seriesLine: 'ALL', year: 'ALL', category: 'ALL', sortBy: 'time-asc' };
-      clearAllSidebarActives();
+      
+      document.querySelectorAll('.sidebar-btn').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.year-pill').forEach(btn => {
+        btn.className = 'pill-btn year-pill px-2.5 py-0.5 rounded bg-gray-100 text-gray-700 border border-gray-200 text-xs font-mono';
+      });
+
       document.getElementById('filter-btn-all').classList.add('active');
       setCategoryFilter('ALL');
       document.getElementById('search-input').value = '';
       document.getElementById('clear-search').classList.add('hidden');
+      document.getElementById('btn-clear-series-line').classList.add('hidden');
       document.getElementById('current-filter-title').innerText = '全部在库周边';
+      
+      updateDynamicSidebars();
       render();
     };
 
@@ -634,12 +686,12 @@
 
     function render() {
       let filtered = ALL_GOODS.filter(item => {
-        // 1. 关键字搜索
         if (currentFilter.keyword) {
           const kw = currentFilter.keyword;
           const matchTitle = (item.title || '').toLowerCase().includes(kw);
           const matchOps = (item.operators || []).some(op => String(op).toLowerCase().includes(kw));
           const matchSeries = (item.series || '').toLowerCase().includes(kw);
+          const matchSeriesLine = (item.series_line || '').toLowerCase().includes(kw);
           const matchCat = (item.category || '').toLowerCase().includes(kw);
           const matchMat = (item.material || '').toLowerCase().includes(kw);
           const matchNote = (item.note || '').toLowerCase().includes(kw);
@@ -648,10 +700,9 @@
             return parsed.tag && parsed.tag.toLowerCase().includes(kw);
           });
           const matchRp = (item.reprint_history || []).some(rp => (rp.series || '').toLowerCase().includes(kw));
-          if (!matchTitle && !matchOps && !matchSeries && !matchCat && !matchMat && !matchNote && !matchImgTag && !matchRp) return false;
+          if (!matchTitle && !matchOps && !matchSeries && !matchSeriesLine && !matchCat && !matchMat && !matchNote && !matchImgTag && !matchRp) return false;
         }
 
-        // 🌟 2. 按【上新档期】过滤 (精确对准首发和复刻企划)
         if (currentFilter.batch !== 'ALL') {
           const b = currentFilter.batch;
           const inSeries = (item.series || '').includes(b);
@@ -659,18 +710,13 @@
           if (!inSeries && !inRp) return false;
         }
 
-        // 🌟 3. 按【系列周边】长线过滤 (通行证/人事部/徽章等)
         if (currentFilter.seriesLine !== 'ALL') {
           const sl = currentFilter.seriesLine;
-          const inTitle = (item.title || '').includes(sl);
-          const inSeries = (item.series || '').includes(sl);
-          if (!inTitle && !inSeries) return false;
+          const matchField = (item.series_line || '').trim() === sl;
+          if (!matchField) return false;
         }
 
-        // 4. 按【发售年份】过滤
         if (currentFilter.year !== 'ALL' && String(item.year) !== String(currentFilter.year)) return false;
-
-        // 5. 按【制品品类】过滤
         if (currentFilter.category !== 'ALL' && !(item.category || '').includes(currentFilter.category)) return false;
 
         return true;
@@ -695,7 +741,7 @@
 
       filtered.forEach(item => {
         const card = document.createElement('div');
-        card.className = "goods-card rounded-2xl overflow-hidden flex flex-col justify-between Antigravity-pointer group";
+        card.className = "goods-card rounded-xl overflow-hidden flex flex-col justify-between Antigravity-pointer group";
         
         const { cover, matchedTag } = resolveSmartCover(item, currentFilter.keyword);
         card.onclick = () => openItemDetail(item, matchedTag);
@@ -711,19 +757,19 @@
             const displayedOps = ops.slice(0, 2);
             const remainCount = ops.length - 2;
             opsHtml = `
-              <div class="flex items-center gap-1.5 mb-2 flex-wrap">
-                ${displayedOps.map(op => `<button type="button" onclick="quickSearchOp(event, '${op}')" class="text-xs px-2 py-0.5 rounded-md bg-gray-100 hover:bg-sky-50 text-gray-700 hover:text-sky-700 border border-gray-200">#${op}</button>`).join('')}
-                <button type="button" onclick="toggleOpsExpansion(event, '${item.id}')" title="点击展开全部干员" class="text-xs px-1.5 py-0.5 rounded-md bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100 font-bold">
+              <div class="flex items-center gap-1 mb-1.5 flex-wrap">
+                ${displayedOps.map(op => `<button type="button" onclick="quickSearchOp(event, '${op}')" class="text-[10px] sm:text-xs px-1.5 py-0.2 rounded bg-gray-100 hover:bg-sky-50 text-gray-700 hover:text-sky-700 border border-gray-200">#${op}</button>`).join('')}
+                <button type="button" onclick="toggleOpsExpansion(event, '${item.id}')" title="点击展开全部干员" class="text-[10px] sm:text-xs px-1 py-0.2 rounded bg-sky-50 text-sky-700 border border-sky-200 hover:bg-sky-100 font-bold">
                   +${remainCount}
                 </button>
               </div>
             `;
           } else {
             opsHtml = `
-              <div class="flex items-center gap-1.5 mb-2 flex-wrap">
-                ${ops.map(op => `<button type="button" onclick="quickSearchOp(event, '${op}')" class="text-xs px-2 py-0.5 rounded-md bg-gray-100 hover:bg-sky-50 text-gray-700 hover:text-sky-700 border border-gray-200">#${op}</button>`).join('')}
+              <div class="flex items-center gap-1 mb-1.5 flex-wrap">
+                ${ops.map(op => `<button type="button" onclick="quickSearchOp(event, '${op}')" class="text-[10px] sm:text-xs px-1.5 py-0.2 rounded bg-gray-100 hover:bg-sky-50 text-gray-700 hover:text-sky-700 border border-gray-200">#${op}</button>`).join('')}
                 ${ops.length > 2 ? `
-                  <button type="button" onclick="toggleOpsExpansion(event, '${item.id}')" title="点击收起干员" class="text-xs px-1.5 py-0.5 rounded-md bg-gray-100 text-gray-500 hover:text-gray-900 border border-gray-200">
+                  <button type="button" onclick="toggleOpsExpansion(event, '${item.id}')" title="点击收起干员" class="text-[10px] sm:text-xs px-1.5 py-0.2 rounded bg-gray-100 text-gray-500 hover:text-gray-900 border border-gray-200">
                     收起
                   </button>
                 ` : ''}
@@ -732,55 +778,62 @@
           }
         }
 
+        const formattedPrice = item.price.startsWith('¥') || !isNaN(item.price) 
+          ? (item.price.startsWith('¥') ? item.price : '¥' + item.price) 
+          : item.price;
+
+        const hasSeriesLine = item.series_line && item.series_line.trim() !== '独立单品';
+
         card.innerHTML = `
           <div>
-            <!-- 封面图 -->
             <div class="relative w-full aspect-square bg-gray-100 overflow-hidden flex items-center justify-center border-b border-gray-100">
               <img src="${cover}" alt="${item.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" onerror="this.src='https://placehold.co/400x400/f3f4f6/9ca3af?text=载入中'">
               
-              <div class="absolute top-2 left-2 flex gap-1.5">
-                <span class="bg-sky-600 text-white font-bold text-[11px] px-2 py-0.5 rounded-md shadow-xs">
+              <div class="absolute top-1.5 left-1.5 flex gap-1 flex-wrap max-w-[80%]">
+                <span class="bg-sky-600 text-white font-bold text-[10px] px-1.5 py-0.2 rounded shadow-xs">
                   ${item.category || '谷子'}
                 </span>
-                ${item.is_limited ? '<span class="bg-rose-500 text-white font-mono text-[11px] px-2 py-0.5 rounded-md font-bold shadow-xs">特典</span>' : ''}
-                ${rpCount > 0 ? `<span class="bg-amber-500 text-white font-mono text-[11px] px-2 py-0.5 rounded-md font-bold shadow-xs">再版×${rpCount}</span>` : ''}
-                ${matchedTag ? `<span class="bg-white/95 text-amber-600 border border-amber-300 font-bold text-[11px] px-2 py-0.5 rounded-md shadow-xs">已定位: ${matchedTag}</span>` : ''}
+                ${item.is_limited ? '<span class="bg-rose-500 text-white font-mono text-[10px] px-1.5 py-0.2 rounded font-bold shadow-xs">特典</span>' : ''}
+                ${rpCount > 0 ? `<span class="bg-amber-500 text-white font-mono text-[10px] px-1.5 py-0.2 rounded font-bold shadow-xs">再版×${rpCount}</span>` : ''}
+                ${matchedTag ? `<span class="bg-white/95 text-amber-700 border border-amber-300 font-bold text-[9px] px-1 py-0.2 rounded shadow-xs">定位:${matchedTag}</span>` : ''}
               </div>
 
               ${imgCount > 0 ? `
-                <div class="absolute top-2 right-2 bg-black/60 backdrop-blur text-white font-mono text-xs px-2 py-0.5 rounded-md flex items-center gap-1 font-bold">
-                  <i data-lucide="image" class="w-3 h-3"></i>
+                <div class="absolute top-1.5 right-1.5 bg-black/60 backdrop-blur text-white font-mono text-[10px] px-1.5 py-0.2 rounded flex items-center gap-0.5 font-bold">
+                  <i data-lucide="image" class="w-2.5 h-2.5"></i>
                   <span>${imgCount}</span>
                 </div>
               ` : ''}
 
-              <span class="absolute bottom-2 right-2 bg-white/90 backdrop-blur text-gray-700 font-mono text-[11px] px-2 py-0.5 rounded-md border border-gray-200 shadow-2xs">
+              <span class="absolute bottom-1 right-1 bg-white/90 backdrop-blur text-gray-700 font-mono text-[9px] px-1 py-0.2 rounded border border-gray-200">
                 ${item.release_date || ''}
               </span>
             </div>
 
-            <!-- 卡片信息主体 (大字加粗，清晰舒服) -->
-            <div class="p-3.5 sm:p-4">
+            <div class="p-2.5 sm:p-3.5">
               ${opsHtml}
-              <h3 class="text-sm sm:text-base font-bold text-gray-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2" title="${item.title}">
+              <h3 class="text-xs sm:text-sm font-bold text-gray-900 group-hover:text-sky-600 transition-colors leading-snug line-clamp-2" title="${item.title}">
                 ${item.title}
               </h3>
-              <p class="text-xs text-gray-500 mt-1 line-clamp-1">
-                ${item.series || '官方企划'}
-              </p>
+              <div class="flex items-center gap-1 text-[11px] text-gray-500 mt-1 truncate">
+                ${hasSeriesLine ? `<span class="text-sky-700 font-semibold truncate">${item.series_line}</span><span>·</span>` : ''}
+                <span class="truncate">${item.series || '官方企划'}</span>
+              </div>
             </div>
           </div>
 
-          <!-- 价格与途径底栏 -->
-          <div class="px-3.5 py-3 sm:px-4 sm:py-3.5 bg-gray-50/70 border-t border-gray-100 flex justify-between items-center text-xs">
-            <div class="flex items-baseline gap-1">
-              <span class="text-gray-400 text-xs">定价:</span>
-              <span class="text-amber-600 font-bold text-sm sm:text-base font-mono truncate max-w-[110px]">
-                ${item.price.startsWith('¥') || !isNaN(item.price) ? (item.price.startsWith('¥') ? item.price : '¥' + item.price) : item.price}
+          <div class="px-2.5 py-2 sm:px-3.5 sm:py-2.5 bg-gray-50/80 border-t border-gray-100 flex flex-col gap-0.5">
+            <div class="flex items-baseline justify-between gap-1">
+              <span class="text-gray-400 text-[10px]">定价:</span>
+              <span class="text-amber-600 font-bold text-xs sm:text-sm font-mono truncate">
+                ${formattedPrice}
               </span>
             </div>
-            <div class="text-sky-700 font-medium text-xs truncate max-w-[110px] text-right">
-              ${item.obtain_type || '线上购入'}
+            <div class="flex items-center justify-between text-[10px] text-gray-400 pt-0.5">
+              <span>渠道:</span>
+              <span class="text-sky-700 font-medium truncate max-w-[100px] text-right">
+                ${item.obtain_type || '线上购入'}
+              </span>
             </div>
           </div>
         `;
@@ -790,7 +843,6 @@
       lucide.createIcons();
     }
 
-    // 展厅推进
     function openItemDetail(item, targetTag) {
       history.pushState({ view: 'detail', id: item.id }, '', `#item-${item.id}`);
 
@@ -814,7 +866,6 @@
 
       updateDetailImgDisplay();
 
-      // 文本填充
       document.getElementById('view-b-title').innerText = item.title;
       document.getElementById('view-b-series').innerText = `首发企划档期：${item.series || '官方企划'}`;
       document.getElementById('view-b-date').innerText = item.release_date || '发售日待考';
@@ -825,7 +876,7 @@
       const opsContainer = document.getElementById('view-b-ops-box');
       if (ops.length > 0) {
         opsContainer.innerHTML = ops.map(op => `
-          <button type="button" onclick="quickSearchOp(event, '${op}')" class="px-2.5 py-1 bg-gray-100 hover:bg-sky-50 text-gray-800 hover:text-sky-700 rounded-lg text-xs border border-gray-200 font-medium transition-colors" title="点击筛选该干员全库">
+          <button type="button" onclick="quickSearchOp(event, '${op}')" class="px-2 py-0.5 bg-gray-100 hover:bg-sky-50 text-gray-800 hover:text-sky-700 rounded text-[11px] border border-gray-200 font-medium transition-colors" title="点击筛选该干员全库">
             #${op}
           </button>
         `).join('');
@@ -841,7 +892,6 @@
       if (item.is_limited) limitedBadge.classList.remove('hidden');
       else limitedBadge.classList.add('hidden');
 
-      // 渲染复刻履历
       const rpSection = document.getElementById('view-b-reprint-section');
       const rpTimeline = document.getElementById('view-b-reprint-timeline');
       const rpBadge = document.getElementById('view-b-reprint-badge');
@@ -852,13 +902,13 @@
         rpBadge.innerText = `共 ${reprintList.length} 次再版记录`;
 
         rpTimeline.innerHTML = reprintList.map(rp => `
-          <div class="p-3 bg-white rounded-xl border border-amber-200/80 flex flex-col gap-1 shadow-2xs">
+          <div class="p-2.5 bg-white rounded-lg border border-amber-200/80 flex flex-col gap-1 shadow-2xs">
             <div class="flex items-center justify-between">
               <span class="text-amber-800 font-bold text-xs">${rp.tag || '复刻再版'}</span>
-              <span class="text-gray-400 text-xs font-mono">${rp.date || ''}</span>
+              <span class="text-gray-400 text-[11px] font-mono">${rp.date || ''}</span>
             </div>
             <div class="text-gray-900 font-bold text-xs">${rp.series || '官方复刻企划'}</div>
-            <div class="flex justify-between items-center text-xs text-gray-500 pt-1.5 border-t border-gray-100">
+            <div class="flex justify-between items-center text-[11px] text-gray-500 pt-1 border-t border-gray-100">
               <span>定价: <strong class="text-amber-600 font-mono font-bold">${rp.price || '原价'}</strong></span>
               <span>渠道: <strong class="text-sky-700">${rp.channel || '线上通贩'}</strong></span>
             </div>
@@ -917,11 +967,11 @@
         thumbRail.classList.remove('hidden');
         
         thumbRail.innerHTML = currentModalImages.map((item, i) => `
-          <div onclick="switchModalImgIndex(${i})" class="flex flex-col items-center gap-1.5 shrink-0 Antigravity-pointer group">
-            <div class="w-16 h-16 rounded-xl border ${i === currentModalImgIndex ? 'border-sky-600 ring-2 ring-sky-200' : 'border-gray-200 opacity-60 hover:opacity-100'} overflow-hidden bg-gray-50 transition-all shadow-xs">
+          <div onclick="switchModalImgIndex(${i})" class="flex flex-col items-center gap-1 shrink-0 Antigravity-pointer group">
+            <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-lg border ${i === currentModalImgIndex ? 'border-sky-600 ring-2 ring-sky-200' : 'border-gray-200 opacity-60 hover:opacity-100'} overflow-hidden bg-gray-50 transition-all shadow-xs">
               <img src="${item.url}" class="w-full h-full object-cover">
             </div>
-            ${item.tag ? `<span class="text-xs font-mono max-w-[64px] truncate text-center transition-colors ${i === currentModalImgIndex ? 'text-sky-700 font-bold' : 'text-gray-400 group-hover:text-gray-700'}">${item.tag}</span>` : ''}
+            ${item.tag ? `<span class="text-[10px] font-mono max-w-[50px] truncate text-center transition-colors ${i === currentModalImgIndex ? 'text-sky-700 font-bold' : 'text-gray-400 group-hover:text-gray-700'}">${item.tag}</span>` : ''}
           </div>
         `).join('');
       }
